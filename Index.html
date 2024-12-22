@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Card</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #ffe4e1, #ffb6c1);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .card-container {
+            perspective: 1500px;
+            width: 600px;
+            height: 400px;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+            transition: transform 1.5s ease;
+        }
+
+        .card.open {
+            transform: rotateY(-180deg);
+        }
+
+        .card-page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-page.front {
+            background: #ffb6c1;
+            z-index: 2;
+        }
+
+        .card-page.back {
+            background: #ffe4e1;
+            transform: rotateY(180deg);
+        }
+
+        .card-page img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .card-page h1 {
+            font-size: 2em;
+            color: #ff69b4;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-page p {
+            font-size: 1.2em;
+            text-align: center;
+            color: #555;
+            position: relative;
+            z-index: 2;
+        }
+
+        .open-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff69b4;
+            border: none;
+            color: white;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            z-index: 2;
+        }
+
+        .open-btn:hover {
+            background: #ff1493;
+        }
+
+        /* Glitter effect */
+        @keyframes glitter {
+            0% { opacity: 0.1; transform: translateY(-10px); }
+            50% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0.1; transform: translateY(10px); }
+        }
+
+        .glitter {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/dark-matter.png') repeat;
+            pointer-events: none;
+            animation: glitter 1.5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="glitter"></div> <!-- Glitter effect -->
+    <div class="card-container">
+        <div class="card" id="card">
+            <div class="card-page front">
+                <img src="sister.jpg" alt="Sister">
+                <h1>Happy Birthday!</h1>
+                <p>To the sweetest sister ever!</p>
+            </div>
+            <div class="card-page back">
+                <h1>Surprise!</h1>
+                <p>Wishing you joy, laughter, and all the love you deserve. 💖</p>
+            </div>
+        </div>
+    </div>
+    <button class="open-btn" id="open-btn">Open Card</button>
+
+    <!-- Add the audio -->
+    <audio id="birthday-audio" loop>
+        <source src="birthday.html.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const card = document.getElementById('card');
+        const openBtn = document.getElementById('open-btn');
+        const birthdayAudio = document.getElementById('birthday-audio');
+
+        openBtn.addEventListener('click', () => {
+            card.classList.add('open');
+            openBtn.style.display = 'none';
+            birthdayAudio.play(); // Play the song when the card opens
+        });
+    </script>
+</body>
+</html>
